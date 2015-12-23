@@ -1,0 +1,30 @@
+<div class="row">
+
+	<div class="twelve columns keyword-box">
+
+		<h4 class="container-title"> Keyword Search </h4>
+
+		<input type="text" ng-change="getResults()" class="keyword-search" ng-model="keyword" placeholder="Heaven"/>
+	</div>
+
+	<div class="row">
+
+		<div class="eight columns results">
+
+			<h4 class="keyword-display"> {{keyword}} <span ng-if="showCount"> - {{count}} results found </span> </h4>
+
+			<div ng-if="results.length > 10" class="pages"> <span class="page" ng-click="fetchResults(page)" ng-repeat="page in pages"> {{page}} </span> </div> 
+
+			<ul class="results-list">
+
+				<li class="result-item" ng-repeat="result in currentPageResults"> 
+					<p class="result-text"> 
+						<span> Sura {{result.sura}}, Ayat {{result.ayat}}: </span> {{result.content}} 
+					</p> 
+				</li>
+			</ul>
+
+		</div>
+
+	</div>
+</div>

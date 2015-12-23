@@ -1,0 +1,33 @@
+<div class="row">
+
+	<div class="twelve columns keyword-box">
+
+		<h4 class="container-title"> Sura Lookup </h4>
+
+		<input type="text" ng-change="getResults()" class="keyword-search" ng-model="sura" placeholder="113"/>
+
+		<p class="empty-message" ng-if="showEmptyMessage"> {{emptyMessage}} </p>
+
+	</div>
+
+	<div class="row">
+
+		<div class="eight columns results">
+
+			<h4 ng-hide="results.length === 0" ng-if="sura.length > 0" class="keyword-display"> Sura {{sura}} </h4>
+
+			<audio controls preload="auto" class="audio-player" ng-hide="results.length === 0" ng-if="sura.length > 0" type="audio/mpeg" src="{{audioSrc}}"> </audio>  
+
+			<ul class="results-list">
+
+				<li class="result-item" ng-repeat="(key, value) in results"> 
+					<p class="result-text"> 
+						<span> Ayat {{key}}: </span> {{value}} 
+					</p> 
+				</li>
+			</ul>
+
+		</div>
+
+	</div>
+</div>
