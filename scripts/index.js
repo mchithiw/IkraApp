@@ -29,6 +29,9 @@ app.controller("navController", function($scope, $location, $http) {
 
 app.controller("homeController", function($scope, $location, $http) {
 
+    $(".nav-button").removeClass("selected-button");
+    $(".keyword-button").addClass("selected-button");
+
     $scope.result = "";
 
     $scope.results;
@@ -38,6 +41,13 @@ app.controller("homeController", function($scope, $location, $http) {
     $scope.pages = [];
 
     $scope.currentPageResults;
+
+    $scope.submit = function() {
+
+        $scope.item = $scope.keyword;
+        console.log($scope.item);
+        $(".keyword-search").blur();
+    }
 
     $scope.getResults = function() {
 
@@ -89,16 +99,23 @@ app.controller("homeController", function($scope, $location, $http) {
             $scope.pages.push(counter);
             counter++;
         }
-
-        console.log($scope.pages);
     }
 
     $scope.fetchResults = function(index)
     {
 
+        var className = "page-" + index;
+
+        console.log(className);
+
+        $(".page").removeClass("current-page");
+        $("." + className).addClass("current-page");
+
         $scope.currentPageResults = [];
 
         var start = (index * 10) - 10;
+
+        $scope.startNum = start + 1;
 
         var end = start + 10;
 
@@ -111,24 +128,62 @@ app.controller("homeController", function($scope, $location, $http) {
             start++;
         }
 
-        console.log($scope.currentPageResults);
+        $scope.endNum = end;
 
+    }
+
+    $scope.scrollTop = function() {
+
+        $("body").scrollTop(0);
     }
 
 });
 
 app.controller("suraController", function($scope, $location, $http) {
 
+    $(".nav-button").removeClass("selected-button");
+    $(".sura-button").addClass("selected-button");
+
     $scope.result = "";
 
     $scope.results;
     $scope.count = 0;
 
+    $scope.suraList = [];
+
     $scope.showEmptyMessage = false;
     $scope.emptyMessage = "Enter a Sura number from 1 - 114.";
 
+    $http.get('sura.txt')
+    .then(function(response) {
+
+        $scope.suraList = response.data.split('\n');
+
+    });
+
+    $scope.submit = function() {
+
+        $scope.item = $scope.sura;
+        console.log($scope.item);
+        $(".keyword-search").blur();
+    }
+
+    $scope.getSura = function() {
+
+        $scope.sura = "";
+
+        console.log("this is the sura list");
+
+        console.log($scope.selectedSura);
+
+        $scope.result = $scope.selectedSura;
+
+        $scope.fetchFinalResults();
+    }
 
     $scope.getResults = function() {
+
+        $scope.selectedSura = "";
 
         if ($scope.sura.length > 0)
         {
@@ -148,31 +203,8 @@ app.controller("suraController", function($scope, $location, $http) {
                 return;
             }
 
-            if ($scope.result < 10)
-                $scope.audioSrc = "mp3/00" + $scope.result + ".mp3";
-            else if ($scope.result < 100)
-                $scope.audioSrc = "mp3/0" + $scope.result + ".mp3";
-            else 
-                $scope.audioSrc = "mp3/" + $scope.result + ".mp3";
+            $scope.fetchFinalResults();
 
-
-            console.log($scope.audioSrc);
-
-            $scope.showEmptyMessage = false;
-
-            $http.post('php/sura.php', {"sura":$scope.result})
-            .then( function(response) {
-
-                console.log(response);
-                $scope.results = response.data;
-                $scope.count = $scope.results.length;
-
-                if (response.data.length === 0)
-                {
-                    $scope.showEmptyMessage = true;
-                }
-
-            });
         } else
         {
             $scope.showCount = false;
@@ -183,5 +215,34 @@ app.controller("suraController", function($scope, $location, $http) {
             $scope.showEmptyMessage = true;
         }
     };
+
+    $scope.fetchFinalResults = function() {
+
+        console.log("final fetch");
+        console.log($scope.result);
+
+        if ($scope.result < 10)
+            $scope.audioSrc = "mp3/00" + $scope.result + ".mp3";
+        else if ($scope.result < 100)
+            $scope.audioSrc = "mp3/0" + $scope.result + ".mp3";
+        else 
+            $scope.audioSrc = "mp3/" + $scope.result + ".mp3";
+
+
+        $scope.showEmptyMessage = false;
+        $http.post('php/sura.php', {"sura":$scope.result})
+        .then( function(response) {
+
+        $scope.results = response.data;
+        $scope.count = $scope.results.length;
+
+        if (response.data.length === 0)
+        {
+            $scope.showEmptyMessage = true;
+        }
+
+        });
+
+    }   
 
 });

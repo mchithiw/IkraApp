@@ -4,16 +4,23 @@
 
 		<h4 class="container-title"> Keyword Search </h4>
 
-		<input type="text" ng-change="getResults()" class="keyword-search" ng-model="keyword" placeholder="Heaven"/>
+		<form ng-submit="submit()">
+
+			<input ng-keyup="$event.keyCode == 13 && submit()" type="text" ng-change="getResults()" class="keyword-search" ng-model="keyword" placeholder="Heaven"/>
+
+			<button type="submit" class="button submit-button"> Search </button>
+
+		</form>
+
 	</div>
 
 	<div class="row">
 
 		<div class="eight columns results">
 
-			<h4 class="keyword-display"> {{keyword}} <span ng-if="showCount"> - {{count}} results found </span> </h4>
+			<h4 class="keyword-display"> {{keyword}} <span ng-if="showCount"> - {{count}} results found </span> </h4> 
 
-			<div ng-if="results.length > 10" class="pages"> <span class="page" ng-click="fetchResults(page)" ng-repeat="page in pages"> {{page}} </span> </div> 
+			<div ng-if="results.length > 10" class="pages"> <span class="page page-{{page}}" ng-click="fetchResults(page); scrollTop()" ng-repeat="page in pages"> {{page}} </span> (Showing {{startNum}} - {{endNum}}) </div>
 
 			<ul class="results-list">
 
@@ -23,6 +30,8 @@
 					</p> 
 				</li>
 			</ul>
+
+			<div ng-if="results.length > 10" class="pages"> <span class="page page-{{page}}" ng-click="fetchResults(page); scrollTop()" ng-repeat="page in pages"> {{page}} </span> </div>
 
 		</div>
 

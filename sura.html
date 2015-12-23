@@ -4,7 +4,14 @@
 
 		<h4 class="container-title"> Sura Lookup </h4>
 
-		<input type="text" ng-change="getResults()" class="keyword-search" ng-model="sura" placeholder="113"/>
+		<input type="text" ng-keyup="$event.keyCode == 13 && submit()" ng-change="getResults()" class="keyword-search" ng-model="sura" placeholder="113"/>
+
+		<p class="or"> Or </p>
+
+		<select class="sura-dropdown" ng-change="getSura()" ng-model="selectedSura"> 
+			<option value=""> Select a Sura </option>
+			<option ng-repeat="sura in suraList" value="{{$index + 1}}"> {{$index + 1}} - {{sura}} </option>
+		</select>
 
 		<p class="empty-message" ng-if="showEmptyMessage"> {{emptyMessage}} </p>
 
@@ -14,9 +21,9 @@
 
 		<div class="eight columns results">
 
-			<h4 ng-hide="results.length === 0" ng-if="sura.length > 0" class="keyword-display"> Sura {{sura}} </h4>
+			<h4 ng-hide="results.length === 0" ng-if="sura.length > 0 || selectedSura" class="keyword-display"> Sura {{result}} - {{suraList[result - 1]}} </h4>
 
-			<audio controls preload="auto" class="audio-player" ng-hide="results.length === 0" ng-if="sura.length > 0" type="audio/mpeg" src="{{audioSrc}}"> </audio>  
+			<audio controls preload="auto" class="audio-player" ng-hide="results.length === 0" ng-if="sura.length > 0 || selectedSura" type="audio/mpeg" src="{{audioSrc}}"> </audio>  
 
 			<ul class="results-list">
 

@@ -51,10 +51,11 @@ body{
 	height: 30px;
 	margin: 0px;
 	padding: 0px;
+	color: #812222;
 }
 
 .results{
-	margin-top: 20px;
+	margin-top: 10px;
 	padding-left: 20px;
 }
 
@@ -78,6 +79,7 @@ body{
 	padding: 10px 0;
 	padding-bottom: 0px;
 	margin-bottom: 20px;
+	color: #812222;
 }
 
 .keyword-display span{
@@ -106,9 +108,55 @@ body{
 	margin: 0 auto;
 	margin-top: 20px;
 	font-size: 1.5em;
+	color: #812222;
 }
 
 .audio-player{
 	margin-bottom: 20px;
 	max-width: 98%;
+}
+
+.submit-button{
+	margin-left: 5px;
+}
+
+.keyword-search:focus{
+	outline: 0;
+}
+
+.sura-dropdown{
+	width: 50%;
+	max-width: 500px;
+	min-width: 200px;
+	color: #812222;
+}
+
+.or{
+	margin: 5px 0;
+	color: #812222;
+	font-weight: bold;
+}
+
+.button:focus{
+	color: black;
+  	border-color: silver;
+}
+
+.selected-button{
+	color: #812222;
+	background-color: white;
+	border: 1px solid #812222;
+}
+
+.current-page{
+	color: black;
+	font-weight: bold;
+}
+
+@media (max-width: 800px) {
+
+	.submit-button{
+		margin-left: 0px;
+		margin-top: 20px;
+	}
 }
