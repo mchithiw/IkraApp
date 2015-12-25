@@ -153,6 +153,19 @@ body{
 	font-weight: bold;
 }
 
+.audio-button{
+	display: block;
+}
+
+.audio-label{
+	font-size: 1.15em;
+	color: #812222;
+	display: inline-block;
+	padding-right: 5px;
+	padding-left: 2px;
+}
+
+
 @media (max-width: 800px) {
 
 	.submit-button{

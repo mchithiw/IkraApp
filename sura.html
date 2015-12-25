@@ -4,7 +4,11 @@
 
 		<h4 class="container-title"> Sura Lookup </h4>
 
-		<input type="text" ng-keyup="$event.keyCode == 13 && submit()" ng-change="getResults()" class="keyword-search" ng-model="sura" placeholder="113"/>
+		<form ng-submit="submit()">
+
+			<input type="text" ng-keyup="$event.keyCode == 13 && submit()" ng-change="getResults()" class="keyword-search" ng-model="sura" placeholder="113"/>
+
+		</form>
 
 		<p class="or"> Or </p>
 
@@ -23,7 +27,17 @@
 
 			<h4 ng-hide="results.length === 0" ng-if="sura.length > 0 || selectedSura" class="keyword-display"> Sura {{result}} - {{suraList[result - 1]}} </h4>
 
-			<audio controls preload="auto" class="audio-player" ng-hide="results.length === 0" ng-if="sura.length > 0 || selectedSura" type="audio/mpeg" src="{{audioSrc}}"> </audio>  
+			<input ng-hide="results.length === 0 || showEmptyMessage" name="audio" id="english-audio" type="radio" ng-change="toggleAudio(audioLanguage)" ng-model="audioLanguage" value="English" name="English"/>
+
+			<label ng-hide="results.length === 0 || showEmptyMessage" class="audio-label" for="english-audio"> English </label> 
+
+			<input ng-hide="results.length === 0 || showEmptyMessage" name="audio" id="arabic-audio" type="radio" ng-change="toggleAudio(audioLanguage)" ng-model="audioLanguage" value="Arabic" name="Arabic"/>
+
+			<label ng-hide="results.length === 0 || showEmptyMessage" class="audio-label" for="arabic-audio"> Arabic </label> 
+
+			<br/>
+
+			<audio controls preload="auto" class="audio-player" ng-hide="results.length === 0" ng-if="sura.length > 0 || selectedSura" type="audio/mpeg" src="{{finalAudioSrc}}"> </audio>  
 
 			<ul class="results-list">
 

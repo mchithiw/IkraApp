@@ -146,13 +146,20 @@ app.controller("suraController", function($scope, $location, $http) {
 
     $scope.result = "";
 
-    $scope.results;
+    $scope.results = [];
     $scope.count = 0;
 
     $scope.suraList = [];
 
     $scope.showEmptyMessage = false;
     $scope.emptyMessage = "Enter a Sura number from 1 - 114.";
+
+    $scope.englishSelected = true;
+    $scope.audioSelected = false;
+
+    $scope.audioLanguage = "English";
+
+    $scope.finalAudioSrc = "";
 
     $http.get('sura.txt')
     .then(function(response) {
@@ -193,6 +200,7 @@ app.controller("suraController", function($scope, $location, $http) {
             {
                 $scope.showEmptyMessage = true;
                 $scope.sura = "";
+                $scope.finalAudioSrc = "";
                 return;
             }
 
@@ -200,6 +208,7 @@ app.controller("suraController", function($scope, $location, $http) {
             {
                 $scope.showEmptyMessage = true;
                 $scope.results = [];
+                $scope.finalAudioSrc = "";
                 return;
             }
 
@@ -214,7 +223,20 @@ app.controller("suraController", function($scope, $location, $http) {
 
             $scope.showEmptyMessage = true;
         }
-    };
+    }
+
+    $scope.toggleAudio = function(value) {
+
+        console.log(value);
+
+        if (value === "Arabic")
+        {
+            $scope.finalAudioSrc = $scope.audioSrc;
+        } else
+        {
+            $scope.finalAudioSrc = $scope.englishAudioSrc;
+        }
+    }
 
     $scope.fetchFinalResults = function() {
 
@@ -227,6 +249,12 @@ app.controller("suraController", function($scope, $location, $http) {
             $scope.audioSrc = "mp3/0" + $scope.result + ".mp3";
         else 
             $scope.audioSrc = "mp3/" + $scope.result + ".mp3";
+
+
+        $scope.englishAudioSrc = "english-" + $scope.audioSrc;
+
+        $scope.finalAudioSrc = $scope.englishAudioSrc;
+        $scope.audioLanguage = "English";
 
 
         $scope.showEmptyMessage = false;
