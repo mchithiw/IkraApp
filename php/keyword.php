@@ -19,7 +19,7 @@
 
         $arr = array();
 
-        $q = $db->prepare('select sura, ayat, content from ikra2 where lower(content) like ? limit 100');
+        $q = $db->prepare('select sura, ayat, content from ikra4 where lower(content) like ? limit 100');
         $q->bind_param('s', $keyword);
         $q->execute();
         $q->bind_result($s, $a, $r);

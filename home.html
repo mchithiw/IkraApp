@@ -22,11 +22,13 @@
 
 			<div ng-if="results.length > 10" class="pages"> <span class="page page-{{page}}" ng-click="fetchResults(page); scrollTop()" ng-repeat="page in pages"> {{page}} </span> (Showing {{startNum}} - {{endNum}}) </div>
 
+			<audio preload="auto" id="ayat-audio" class="ayat-audio" ng-src="{{ayatAudio}}" type="audio/mpeg"> </audio>
+
 			<ul class="results-list">
 
 				<li class="result-item" ng-repeat="result in currentPageResults"> 
 					<p class="result-text"> 
-						<span> Sura {{result.sura}}, Ayat {{result.ayat}}: </span> {{result.content}} 
+						<span> <img class="audio-img" ng-click="play(result.audioSrc, $index)" src="{{result.audioOnSrc}}"/> Sura {{result.sura}}, Ayat {{result.ayat + 1}}: </span> {{result.content}} 
 					</p> 
 				</li>
 			</ul>

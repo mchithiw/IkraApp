@@ -11,7 +11,7 @@
 
         $arr = array();
 
-        $q = $db->prepare('select ayat, content from ikra2 where sura = ?');
+        $q = $db->prepare('select ayat, content from ikra4 where sura = ?');
         $q->bind_param('i', $sura);
         $q->execute();
         $q->bind_result($a, $r);

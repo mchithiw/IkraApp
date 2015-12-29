@@ -42,6 +42,9 @@ app.controller("homeController", function($scope, $location, $http) {
 
     $scope.currentPageResults;
 
+    $scope.ayatAudio = "";
+
+
     $scope.submit = function() {
 
         $scope.item = $scope.keyword;
@@ -59,16 +62,12 @@ app.controller("homeController", function($scope, $location, $http) {
                 keyword: $scope.result
             });
 
-            console.log("About to post");
-            console.log($scope.result);
-
             $http.post('php/keyword.php', {"keyword":$scope.result})
             .then( function(response) {
 
                 $scope.results = response.data;
                 $scope.currentPageResults = $scope.results;
                 $scope.count = $scope.results.length;
-                console.log($scope.count);
                 $scope.showCount = true;
 
                 pagenation();
@@ -129,6 +128,98 @@ app.controller("homeController", function($scope, $location, $http) {
         }
 
         $scope.endNum = end;
+
+        angular.forEach($scope.currentPageResults, function(value, key) {
+
+            var ayat = value.ayat;
+            var sura = value.sura;
+
+            if (ayat < 10)
+                ayat = "00" + ayat;
+            else if (ayat < 100)
+                ayat = "0" + ayat;
+
+            if (sura < 10)
+                sura = "00" + sura;
+            else if (sura < 100)
+                sura = "0" + sura;
+
+            value.audioSrc = "verse-mp3/" + sura + "-" + ayat + ".mp3";
+            value.audioOnSrc = "content/images/sound.png";
+
+        });
+
+        console.log($scope.currentPageResults);
+
+    }
+
+    //$scope.ayatAudio = "verse-mp3/001-001.mp3";
+
+    /*$scope.play = function(src, index) {
+
+        if (src === $scope.ayatAudio)
+        {
+            $scope.ayatAudio = "";
+            $scope.currentPageResults[index].audioOnSrc = "content/images/sound.png";
+            //$(".ayat-audio").get(0).pause();
+            //$(".ayat-audio").get(0).play();
+        } else {
+            $scope.ayatAudio = src;
+            $scope.currentPageResults[index].audioOnSrc = "content/images/sound-off.png";
+
+            //$(".ayat-audio").get(0).play();
+
+            angular.forEach($scope.currentPageResults, function(value, key) {
+
+                if (key !== index)
+                {
+                    value.audioOnSrc = "content/images/sound.png";
+                    //$(".ayat-audio").get(0).play();
+
+                }
+            });
+
+            var temp = $("#ayat-audio").get(0);
+            temp.load();
+            temp.play();
+            console.log("playing");
+            console.log(temp);
+            console.log(temp.src);
+
+        }
+
+    }*/
+
+    $scope.play = function(src, index) {
+
+        var audio = document.getElementById('ayat-audio');
+
+        var temp = audio.src.substring(audio.src.length - 21, audio.src.length);
+        
+        if (src === temp)
+        {
+            console.log("pause-now");
+            audio.pause();
+            $scope.currentPageResults[index].audioOnSrc = "content/images/sound.png";
+            audio.setAttribute('src', "");
+        } else 
+        {
+            audio.setAttribute('src', src);
+            audio.load();
+            audio.play();
+            $scope.currentPageResults[index].audioOnSrc = "content/images/sound-off.png";
+            
+            angular.forEach($scope.currentPageResults, function(value, key) {
+
+                if (key !== index)
+                {
+                    value.audioOnSrc = "content/images/sound.png";
+                }
+
+            });
+
+            console.log(audio);
+        }
 
     }
 

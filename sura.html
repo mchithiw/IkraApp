@@ -41,9 +41,9 @@
 
 			<ul class="results-list">
 
-				<li class="result-item" ng-repeat="(key, value) in results"> 
+				<li class="result-item" ng-repeat="(key, value) in results track by $index"> 
 					<p class="result-text"> 
-						<span> Ayat {{key}}: </span> {{value}} 
+						<span> Ayat {{key + 1}}: </span> {{value}} 
 					</p> 
 				</li>
 			</ul>

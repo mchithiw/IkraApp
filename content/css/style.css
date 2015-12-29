@@ -118,6 +118,7 @@ body{
 
 .submit-button{
 	margin-left: 5px;
+	color: #812222;
 }
 
 .keyword-search:focus{
@@ -165,6 +166,41 @@ body{
 	padding-left: 2px;
 }
 
+.audio-img{
+	max-width: 24px;
+	height: auto;
+	margin-right: 5px;
+}
+
+.container{
+	margin-bottom: 30px;
+}
+
+html {
+  position: relative;
+  min-height:100%;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 10px 0px;
+  color: #812222;
+}
+
+.footer-text{
+	padding: 0px 5px;
+	margin: 0px;
+	font-weight: normal;
+	text-align: center;
+	color: black;
+}
+
+.footer-link{
+	font-weight: bold;
+	text-decoration: none;
+	color: #812222;
+}
 
 @media (max-width: 800px) {
 
